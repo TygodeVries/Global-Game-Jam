@@ -36,7 +36,7 @@ public class HoldItems : MonoBehaviour
         // Check all place points
         foreach (PlacePoint placePoint in placePoints)
         {
-            if (placePoint.placedObject == null)
+            if (placePoint.GetPlacedObject() == null)
                 continue;
 
             // See if we can reach it
@@ -55,10 +55,11 @@ public class HoldItems : MonoBehaviour
 
     private void PickupNear(PlacePoint placePoint)
     {
-        item = placePoint.placedObject;
+        item = placePoint.GetPlacedObject();
         item.transform.SetParent(holdPoint.transform);
         item.transform.position = holdPoint.transform.position;
         Destroy(item.GetComponent<Rigidbody>());
+        placePoint.SetPlacedObject(null);
     }
 
     private void PickupFloor()
@@ -98,7 +99,7 @@ public class HoldItems : MonoBehaviour
         // Check all place points
         foreach (PlacePoint placePoint in placePoints)
         {
-            if (placePoint.placedObject != null)
+            if (placePoint.GetPlacedObject() != null)
                 continue;
 
             // See if we can reach it
@@ -125,7 +126,7 @@ public class HoldItems : MonoBehaviour
         // Move the item to the position of the 
         item.transform.position = placePoint.transform.position;
         item.transform.SetParent(placePoint.transform);
-        placePoint.placedObject = item;
+        placePoint.SetPlacedObject(item);
         Destroy(item.GetComponent<Rigidbody>());
         item = null;
     }
