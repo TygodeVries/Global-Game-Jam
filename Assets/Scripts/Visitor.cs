@@ -16,7 +16,7 @@ public class Visitor : MonoBehaviour
     /// Wait for a table to be available of our type
     /// </summary>
     /// <returns></returns>
-    public IEnumerator FindATable()
+    private IEnumerator FindATable()
     {
         while (table == null)
         {
@@ -36,7 +36,7 @@ public class Visitor : MonoBehaviour
         }
     }
 
-    public IEnumerator GoToTable()
+    private IEnumerator GoToTable()
     {
         NavMeshAgent agent = GetComponent<NavMeshAgent>();
 
@@ -50,7 +50,7 @@ public class Visitor : MonoBehaviour
         });
     }
 
-    public IEnumerator WaitForPlayerNear()
+    private IEnumerator WaitForPlayerNear()
     {
         bool waitingForPlayer = true;
         while (waitingForPlayer)
@@ -71,6 +71,7 @@ public class Visitor : MonoBehaviour
     }
     private IEnumerator Start()
     {
+        startPosition = transform.position;
         yield return FindATable();
 
         yield return GoToTable();
@@ -90,8 +91,37 @@ public class Visitor : MonoBehaviour
         {
             toughts.text += $"- {tag}\n";
         }
+
+        yield return LeaveAfterAWhile();
     }
 
+    private IEnumerator LeaveAfterAWhile()
+    {
+        yield return new WaitForSeconds(30f);
+        yield return Leave();
+    }
+
+
+    private IEnumerator Leave()
+    {
+        NavMeshAgent agent = GetComponent<NavMeshAgent>();
+        agent.destination = startPosition;
+        yield return new WaitForSeconds(1);
+
+        yield return new WaitUntil(() =>
+        {
+            return agent.velocity.sqrMagnitude < 0.01f;
+        });
+
+        Destroy(gameObject);
+    }
+
+    public void LeaveNow()
+    {
+        StartCoroutine(Leave());
+    }
+
+    Vector3 startPosition;
 
     [SerializeField] public TMP_Text toughts;
     [SerializeField] public List<Tags> request;
