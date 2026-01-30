@@ -2,5 +2,7 @@
 public enum Tags
 {
     Cooked,
-    Burned
+    Burned,
+    FleshCube,
+    Poison
 }
