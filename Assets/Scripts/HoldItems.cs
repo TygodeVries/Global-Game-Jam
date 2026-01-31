@@ -6,8 +6,10 @@ public class HoldItems : MonoBehaviour
 
     PlacePoint[] placePoints;
     InputAction pickupAction;
+    Animator animator;
     private void Start()
     {
+        animator = GetComponentInChildren<Animator>();
         PlayerInput input = GetComponent<PlayerInput>();
         pickupAction = input.actions["Pickup"];
         pickupAction.Enable();
@@ -19,6 +21,8 @@ public class HoldItems : MonoBehaviour
 
     public void Update()
     {
+        animator.SetBool("IsHolding", item != null);
+
         if (pickupAction.IsPressed())
         {
             PowerUpThrow();
@@ -73,7 +77,9 @@ public class HoldItems : MonoBehaviour
         item.transform.SetParent(holdPoint.transform);
         item.transform.position = holdPoint.transform.position;
 
-        item.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+        item.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        item.GetComponent<Collider>().isTrigger = true;
+        item.transform.rotation = holdPoint.transform.rotation;
         placePoint.SetPlacedObject(null);
     }
 
@@ -99,7 +105,9 @@ public class HoldItems : MonoBehaviour
             return;
 
         GameObject gm = nearestBody.gameObject;
-        gm.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+        gm.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        gm.GetComponent<Collider>().isTrigger = true;
+        gm.transform.rotation = holdPoint.transform.rotation;
         item = gm;
         item.transform.SetParent(holdPoint.transform);
         item.transform.position = holdPoint.transform.position;
@@ -141,7 +149,8 @@ public class HoldItems : MonoBehaviour
         item.transform.position = placePoint.transform.position;
         item.transform.SetParent(placePoint.transform);
         placePoint.SetPlacedObject(item);
-        item.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+        item.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        item.GetComponent<Collider>().isTrigger = true;
         item = null;
     }
 
@@ -150,6 +159,7 @@ public class HoldItems : MonoBehaviour
         // Add physics, remove parent
         Rigidbody body = item.GetComponent<Rigidbody>();
         body.constraints = RigidbodyConstraints.None;
+        item.GetComponent<Collider>().isTrigger = false;
         body.linearVelocity = ((transform.forward.normalized * 3) + new Vector3(0, 2, 0)) * Mathf.Clamp(throwPower, 0, 2) * 1.5f;
 
         item.transform.SetParent(null);
