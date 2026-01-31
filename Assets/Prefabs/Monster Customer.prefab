@@ -195,6 +195,7 @@ GameObject:
   - component: {fileID: 585728580535639780}
   - component: {fileID: 1298474738153388159}
   - component: {fileID: 158906259226106682}
+  - component: {fileID: -3312724119675953276}
   m_Layer: 0
   m_Name: Monster Customer
   m_TagString: Grindable
@@ -337,6 +338,18 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &-3312724119675953276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4929122849963342625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56e8052986a7de84f88f2aed33c77cf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Scarer
 --- !u!1 &6932990317803816051
 GameObject:
   m_ObjectHideFlags: 0
