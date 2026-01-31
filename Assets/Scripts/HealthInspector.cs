@@ -4,6 +4,7 @@ using UnityEngine;
 public class HealthInspector : MonoBehaviour
 {
     public GameObject fireStarter;
+    public GameObject scoreCanvas;
 
     public bool isComing = false;
     public void PanicStarts(Visitor starter)
@@ -38,5 +39,16 @@ public class HealthInspector : MonoBehaviour
 
         yield return new WaitForSeconds(2);
         FindAnyObjectByType<Camera>().GetComponent<CameraMotion>().SetTarget(null);
+
+        yield return new WaitForSeconds(20);
+        scoreCanvas.SetActive(true);
+
+        foreach (PlayerMovement playerMovement in FindObjectsByType<PlayerMovement>(FindObjectsSortMode.None))
+        {
+            Destroy(playerMovement.gameObject);
+        }
+
+        Destroy(gameObject);
+
     }
 }

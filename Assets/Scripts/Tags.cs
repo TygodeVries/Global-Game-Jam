@@ -4,5 +4,6 @@ public enum Tags
     Cooked,
     Burned,
     FleshCube,
-    Poison
+    Poison,
+    Potato
 }
