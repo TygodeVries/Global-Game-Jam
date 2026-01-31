@@ -8,6 +8,9 @@ public class Knive : MonoBehaviour
 
         foreach (Visitor visitor in visitors)
         {
+            if (visitor.visitorType == VisitorType.Monster)
+                continue;
+
             Vector3 v = visitor.transform.position;
             v.y = 0;
 
