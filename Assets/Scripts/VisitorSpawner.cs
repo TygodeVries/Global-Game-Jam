@@ -9,6 +9,9 @@ public class VisitorSpawner : MonoBehaviour
     {
         while (true)
         {
+            if (FindAnyObjectByType<HealthInspector>().isComing)
+                yield break;
+
             Visitor[] visitors = FindObjectsByType<Visitor>(FindObjectsSortMode.None);
             Visitor prefab = visitorPrefab.GetComponent<Visitor>();
             int count = 0;

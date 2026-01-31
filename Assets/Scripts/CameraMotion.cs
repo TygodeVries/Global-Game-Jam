@@ -7,6 +7,11 @@ public class CameraMotion : MonoBehaviour
     List<PlayerInput> playerInputs = new List<PlayerInput>();
     Vector3 startPoint;
 
+    Transform target;
+    public void SetTarget(Transform tr)
+    {
+        target = tr;
+    }
     private void Start()
     {
         startPoint = transform.position;
@@ -24,15 +29,22 @@ public class CameraMotion : MonoBehaviour
 
     public void Update()
     {
-        Vector3 center = new Vector3(0, 0, 0);
-
-        for (int i = 0; i < playerInputs.Count; i++)
+        if (target == null)
         {
-            center += playerInputs[i].transform.position;
+            Vector3 center = new Vector3(0, 0, 0);
+
+            for (int i = 0; i < playerInputs.Count; i++)
+            {
+                center += playerInputs[i].transform.position;
+            }
+
+            center /= playerInputs.Count;
+
+            transform.position = Vector3.Lerp(transform.position, startPoint + center.normalized, Time.deltaTime);
         }
-
-        center /= playerInputs.Count;
-
-        transform.position = Vector3.Lerp(transform.position, startPoint + center.normalized, Time.deltaTime);
+        else
+        {
+            transform.position = Vector3.Lerp(transform.position, target.position + new Vector3(0, 4, -4), Time.deltaTime);
+        }
     }
 }

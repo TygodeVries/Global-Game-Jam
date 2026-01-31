@@ -98,15 +98,17 @@ public class Visitor : MonoBehaviour
     private IEnumerator LeaveAfterAWhile()
     {
         yield return new WaitForSeconds(30f);
+
+        toughts.text = "This is taking so long, I am leaving soon!";
+        yield return new WaitForSeconds(10f);
+
+        toughts.text = "This took way to long!";
         yield return Leave();
     }
 
 
     private IEnumerator Leave()
     {
-        yield return new WaitForSeconds(3);
-
-        toughts.text = "Time to go home!";
         NavMeshAgent agent = GetComponent<NavMeshAgent>();
         agent.destination = startPosition;
         yield return new WaitForSeconds(1);
@@ -135,6 +137,7 @@ public class Visitor : MonoBehaviour
         Destroy(gameObject.GetComponent<NavMeshAgent>());
         gameObject.AddComponent<Rigidbody>();
         gameObject.tag = "Item";
+        gameObject.AddComponent<Scarer>();
         Destroy(this);
     }
 
