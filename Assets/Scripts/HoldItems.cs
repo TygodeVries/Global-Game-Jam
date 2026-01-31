@@ -15,14 +15,21 @@ public class HoldItems : MonoBehaviour
         placePoints = FindObjectsByType<PlacePoint>(FindObjectsSortMode.None);
     }
 
+    float throwPower;
+
     public void Update()
     {
-        if (pickupAction.WasPressedThisFrame())
+        if (pickupAction.IsPressed())
+            throwPower += Time.deltaTime;
+
+        if (pickupAction.WasReleasedThisFrame())
         {
             if (item != null)
                 DropItem();
             else
                 PickupItem();
+
+            throwPower = 0;
         }
     }
 
@@ -135,7 +142,7 @@ public class HoldItems : MonoBehaviour
     {
         // Add physics, remove parent
         Rigidbody body = item.AddComponent<Rigidbody>();
-        body.linearVelocity = (transform.forward.normalized * 3) + new Vector3(0, 2, 0);
+        body.linearVelocity = ((transform.forward.normalized * 3) + new Vector3(0, 2, 0)) * Mathf.Clamp(throwPower, 0, 2) * 1.5f;
 
         item.transform.SetParent(null);
         item = null;
