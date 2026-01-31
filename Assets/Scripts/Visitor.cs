@@ -91,6 +91,7 @@ public class Visitor : MonoBehaviour
 
         yield return GoToTable();
 
+        animator.SetBool("Sitting", true);
         toughts.text = "Waiting...";
 
         //  yield return WaitForPlayerNear();
@@ -124,6 +125,7 @@ public class Visitor : MonoBehaviour
 
     private IEnumerator Leave()
     {
+        animator.SetBool("Sitting", false);
         NavMeshAgent agent = GetComponent<NavMeshAgent>();
         agent.destination = startPosition;
         yield return new WaitForSeconds(1);
@@ -150,9 +152,11 @@ public class Visitor : MonoBehaviour
     {
         StopAllCoroutines();
         Destroy(gameObject.GetComponent<NavMeshAgent>());
+        Destroy(animator);
         gameObject.AddComponent<Rigidbody>();
         gameObject.tag = "Item";
         gameObject.AddComponent<Scarer>();
+        animator.ResetControllerState(true);
         Destroy(this);
     }
 
@@ -160,7 +164,7 @@ public class Visitor : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         toughts.text = "I am not feeling well.";
-
+        animator.SetBool("Sitting", false);
         yield return new WaitForSeconds(1);
 
         Toilet toilet = FindAnyObjectByType<Toilet>();
@@ -175,7 +179,9 @@ public class Visitor : MonoBehaviour
             return agent.velocity.sqrMagnitude < 0.01f;
         });
 
+        animator.SetBool("Barfing", true);
         yield return new WaitForSeconds(200);
+        animator.SetBool("Barfing", false);
         LeaveNow();
 
     }

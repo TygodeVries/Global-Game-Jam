@@ -58,6 +58,7 @@ public class Scarable : MonoBehaviour
         if (susMeter > 1)
         {
             Visitor visitor = GetComponent<Visitor>();
+            visitor.gameObject.GetComponentInChildren<Animator>().SetBool("Panic", true);
             visitor.toughts.text = "AAAAHHAHHAHAHAHAHHAHH!!!!!!";
             FindAnyObjectByType<HealthInspector>().PanicStarts(visitor);
             visitor.LeaveNow();
