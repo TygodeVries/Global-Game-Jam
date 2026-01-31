@@ -25,6 +25,9 @@ public class HealthInspector : MonoBehaviour
         {
             visitor.StopAllCoroutines();
             visitor.LeaveNow();
+
+            if (visitor.visitorType == VisitorType.Human)
+                visitor.animator.SetBool("Panic", true);
         }
 
         GameObject gm = null;

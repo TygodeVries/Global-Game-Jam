@@ -4,6 +4,13 @@ public class Table : MonoBehaviour
 {
     [HideInInspector] public Visitor visitor;
     [SerializeField] public VisitorType type;
+
+    public void Update()
+    {
+        if (visitor.atTable)
+            visitor.transform.forward = transform.up;
+    }
+
     public void FoodServed(GameObject gm)
     {
         Food food = gm.GetComponent<Food>();

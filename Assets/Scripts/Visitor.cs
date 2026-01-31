@@ -50,6 +50,7 @@ public class Visitor : MonoBehaviour
         }
     }
 
+    public bool atTable;
     private IEnumerator GoToTable()
     {
 
@@ -61,6 +62,8 @@ public class Visitor : MonoBehaviour
         {
             return agent.velocity.sqrMagnitude < 0.01f;
         });
+
+        atTable = true;
     }
 
     private IEnumerator WaitForPlayerNear()
@@ -125,6 +128,7 @@ public class Visitor : MonoBehaviour
 
     private IEnumerator Leave()
     {
+        atTable = false;
         animator.SetBool("Sitting", false);
         NavMeshAgent agent = GetComponent<NavMeshAgent>();
         agent.destination = startPosition;
@@ -150,6 +154,7 @@ public class Visitor : MonoBehaviour
 
     public void Die()
     {
+        toughts.text = "";
         StopAllCoroutines();
         Destroy(gameObject.GetComponent<NavMeshAgent>());
         Destroy(animator);
@@ -162,6 +167,7 @@ public class Visitor : MonoBehaviour
 
     private IEnumerator AtePoison()
     {
+        atTable = false;
         yield return new WaitForSeconds(3);
         toughts.text = "I am not feeling well.";
         animator.SetBool("Sitting", false);

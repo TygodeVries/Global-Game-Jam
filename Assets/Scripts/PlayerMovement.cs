@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
         if (dir.magnitude > 0.3f)
         {
             animator.SetBool("IsWalking", true);
-            rb.linearVelocity = dir.normalized * Speed;
+            rb.linearVelocity = (dir.normalized * Speed) + Vector3.down;
             transform.forward = dir;
         }
         else
