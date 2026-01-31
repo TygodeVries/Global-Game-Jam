@@ -7,10 +7,24 @@ using UnityEngine.AI;
 
 public class Visitor : MonoBehaviour
 {
+
+    public Animator animator;
     [SerializeField] public VisitorType visitorType;
 
     Table table = null;
+    NavMeshAgent agent;
 
+    private void Update()
+    {
+        if (agent.velocity.sqrMagnitude > 0.1f)
+        {
+            animator.SetBool("Walking", true);
+        }
+        else
+        {
+            animator.SetBool("Walking", false);
+        }
+    }
 
     /// <summary>
     /// Wait for a table to be available of our type
@@ -38,7 +52,6 @@ public class Visitor : MonoBehaviour
 
     private IEnumerator GoToTable()
     {
-        NavMeshAgent agent = GetComponent<NavMeshAgent>();
 
         agent.destination = table.transform.position;
         yield return new WaitForSeconds(1);
@@ -71,6 +84,8 @@ public class Visitor : MonoBehaviour
     }
     private IEnumerator Start()
     {
+        agent = GetComponent<NavMeshAgent>();
+        animator = GetComponentInChildren<Animator>();
         startPosition = transform.position;
         yield return FindATable();
 
