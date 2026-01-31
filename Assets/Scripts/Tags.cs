@@ -6,5 +6,6 @@ public enum Tags
     FleshCube,
     Poison,
     Potato,
-    Llama
+    Llama,
+    Cut
 }

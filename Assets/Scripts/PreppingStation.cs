@@ -15,7 +15,7 @@ public class PreppingStation : MonoBehaviour
     {
         if (requiresKnife)
         {
-            knive = GetComponent<Knive>();
+            knive = FindAnyObjectByType<Knive>();
             alert = GetComponentInChildren<TMP_Text>();
         }
     }
@@ -43,16 +43,21 @@ public class PreppingStation : MonoBehaviour
     {
         if (food == null)
         {
-            alert.text = "";
+            if (requiresKnife)
+                alert.text = "";
             return;
         }
 
-        if (requiresKnife && Vector3.Distance(knive.transform.position, transform.position) > 3 && knive.transform.parent != null) // Assume parent is player
+        if (requiresKnife && (Vector3.Distance(knive.transform.position, transform.position) > 1 || knive.transform.parent == null)) // Assume parent is player
         {
             alert.text = "Must Hold Knife!";
             return;
         }
-        else { alert.text = ""; }
+        else
+        {
+            if (requiresKnife)
+                alert.text = "";
+        }
 
 
         time += Time.deltaTime;
