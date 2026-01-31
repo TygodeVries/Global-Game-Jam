@@ -20,8 +20,9 @@ public class HoldItems : MonoBehaviour
     public void Update()
     {
         if (pickupAction.IsPressed())
-            throwPower += Time.deltaTime;
-
+        {
+            PowerUpThrow();
+        }
         if (pickupAction.WasReleasedThisFrame())
         {
             if (item != null)
@@ -31,6 +32,12 @@ public class HoldItems : MonoBehaviour
 
             throwPower = 0;
         }
+    }
+
+    public void PowerUpThrow()
+    {
+        throwPower += Time.deltaTime;
+        item.GetComponent<Rigidbody>().angularVelocity = new Vector3(4, 4) * Mathf.Clamp(throwPower, 0, 2);
     }
 
     float reach = 2;
@@ -65,7 +72,8 @@ public class HoldItems : MonoBehaviour
         item = placePoint.GetPlacedObject();
         item.transform.SetParent(holdPoint.transform);
         item.transform.position = holdPoint.transform.position;
-        Destroy(item.GetComponent<Rigidbody>());
+
+        item.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
         placePoint.SetPlacedObject(null);
     }
 
@@ -91,8 +99,7 @@ public class HoldItems : MonoBehaviour
             return;
 
         GameObject gm = nearestBody.gameObject;
-        Destroy(gm.GetComponent<Rigidbody>());
-
+        gm.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
         item = gm;
         item.transform.SetParent(holdPoint.transform);
         item.transform.position = holdPoint.transform.position;
@@ -134,14 +141,15 @@ public class HoldItems : MonoBehaviour
         item.transform.position = placePoint.transform.position;
         item.transform.SetParent(placePoint.transform);
         placePoint.SetPlacedObject(item);
-        Destroy(item.GetComponent<Rigidbody>());
+        item.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
         item = null;
     }
 
     private void DropOnFloor()
     {
         // Add physics, remove parent
-        Rigidbody body = item.AddComponent<Rigidbody>();
+        Rigidbody body = item.GetComponent<Rigidbody>();
+        body.constraints = RigidbodyConstraints.None;
         body.linearVelocity = ((transform.forward.normalized * 3) + new Vector3(0, 2, 0)) * Mathf.Clamp(throwPower, 0, 2) * 1.5f;
 
         item.transform.SetParent(null);
