@@ -78,7 +78,7 @@ public class Visitor : MonoBehaviour
 
         toughts.text = "Waiting...";
 
-        yield return WaitForPlayerNear();
+        //  yield return WaitForPlayerNear();
 
         toughts.text = "I want:\n";
         foreach (Tags tag in request)
@@ -92,15 +92,15 @@ public class Visitor : MonoBehaviour
             toughts.text += $"- {tag}\n";
         }
 
-        yield return LeaveAfterAWhile();
+        //   yield return LeaveAfterAWhile();
     }
 
     private IEnumerator LeaveAfterAWhile()
     {
-        yield return new WaitForSeconds(30f);
+        yield return new WaitForSeconds(120f);
 
         toughts.text = "This is taking so long, I am leaving soon!";
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(30f);
 
         toughts.text = "This took way to long!";
         yield return Leave();
