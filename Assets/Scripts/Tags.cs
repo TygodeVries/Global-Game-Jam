@@ -5,5 +5,6 @@ public enum Tags
     Burned,
     FleshCube,
     Poison,
-    Potato
+    Potato,
+    Llama
 }

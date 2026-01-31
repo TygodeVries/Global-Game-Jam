@@ -41,7 +41,6 @@ public class HoldItems : MonoBehaviour
     public void PowerUpThrow()
     {
         throwPower += Time.deltaTime;
-        item.GetComponent<Rigidbody>().angularVelocity = new Vector3(4, 4) * Mathf.Clamp(throwPower, 0, 2);
     }
 
     float reach = 2;
