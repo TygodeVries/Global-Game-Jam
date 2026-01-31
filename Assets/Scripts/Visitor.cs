@@ -104,6 +104,9 @@ public class Visitor : MonoBehaviour
 
     private IEnumerator Leave()
     {
+        yield return new WaitForSeconds(3);
+
+        toughts.text = "Time to go home!";
         NavMeshAgent agent = GetComponent<NavMeshAgent>();
         agent.destination = startPosition;
         yield return new WaitForSeconds(1);
@@ -119,6 +122,44 @@ public class Visitor : MonoBehaviour
     public void LeaveNow()
     {
         StartCoroutine(Leave());
+    }
+
+    public void AtePoisonNow()
+    {
+        StartCoroutine(AtePoison());
+    }
+
+    public void Die()
+    {
+        StopAllCoroutines();
+        Destroy(gameObject.GetComponent<NavMeshAgent>());
+        gameObject.AddComponent<Rigidbody>();
+        gameObject.tag = "Item";
+        Destroy(this);
+    }
+
+    private IEnumerator AtePoison()
+    {
+        yield return new WaitForSeconds(3);
+        toughts.text = "I am not feeling well.";
+
+        yield return new WaitForSeconds(1);
+
+        Toilet toilet = FindAnyObjectByType<Toilet>();
+
+        NavMeshAgent agent = GetComponent<NavMeshAgent>();
+        agent.destination = toilet.transform.position;
+
+        yield return new WaitForSeconds(1);
+
+        yield return new WaitUntil(() =>
+        {
+            return agent.velocity.sqrMagnitude < 0.01f;
+        });
+
+        yield return new WaitForSeconds(200);
+        LeaveNow();
+
     }
 
     Vector3 startPosition;

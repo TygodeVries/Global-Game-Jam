@@ -34,6 +34,10 @@ public class Table : MonoBehaviour
         visitor.toughts.text = "Ohhh I love this!";
 
         Destroy(food.gameObject);
-        visitor.LeaveNow();
+        if (food.tags.Contains(Tags.Poison))
+            visitor.AtePoisonNow();
+
+        else
+            visitor.LeaveNow();
     }
 }

@@ -134,7 +134,9 @@ public class HoldItems : MonoBehaviour
     private void DropOnFloor()
     {
         // Add physics, remove parent
-        item.AddComponent<Rigidbody>();
+        Rigidbody body = item.AddComponent<Rigidbody>();
+        body.linearVelocity = (transform.forward.normalized * 3) + new Vector3(0, 2, 0);
+
         item.transform.SetParent(null);
         item = null;
     }
