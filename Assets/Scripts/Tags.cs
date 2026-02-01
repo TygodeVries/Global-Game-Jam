@@ -3,7 +3,7 @@ public enum Tags
 {
     Cooked,
     Burned,
-    FleshCube,
+    Leg,
     Poison,
     Potato,
     Llama,

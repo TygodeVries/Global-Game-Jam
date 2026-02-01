@@ -42,9 +42,20 @@ public class Table : MonoBehaviour
 
         Destroy(food.gameObject);
         if (food.tags.Contains(Tags.Poison))
+        {
+            FindAnyObjectByType<ScoreCounter>().AddScore(100);
             visitor.AtePoisonNow();
+        }
 
         else
+        {
+            if (visitor.visitorType == VisitorType.Human)
+                FindAnyObjectByType<ScoreCounter>().AddScore(100);
+
+            if (visitor.visitorType == VisitorType.Monster)
+                FindAnyObjectByType<ScoreCounter>().AddScore(1000);
+
             visitor.LeaveNow();
+        }
     }
 }
