@@ -10,9 +10,10 @@ public class PreppingStation : MonoBehaviour
     float time = 0;
     Knive knive;
 
-
+    AudioSource used;
     private void Start()
     {
+        used = GetComponent<AudioSource>();
         if (requiresKnife)
         {
             knive = FindAnyObjectByType<Knive>();
@@ -26,11 +27,14 @@ public class PreppingStation : MonoBehaviour
         {
             Food food = gameObject.GetComponent<Food>();
             this.food = food;
+
+            used.Play();
         }
         else
         {
             food = null;
         }
+
 
         Debug.Log("Updated!");
         step = 0;
@@ -58,8 +62,6 @@ public class PreppingStation : MonoBehaviour
             if (requiresKnife)
                 alert.text = "";
         }
-
-
         time += Time.deltaTime;
 
         if (step < preppingSteps.Count && time > preppingSteps[step].time)

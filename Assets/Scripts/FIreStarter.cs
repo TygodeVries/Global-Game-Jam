@@ -15,6 +15,7 @@ public class FIreStarter : MonoBehaviour
         {
             GameObject.Instantiate(fire, transform.position, Quaternion.identity);
             lastDropPlace = transform.position;
+            FindAnyObjectByType<ScoreCounter>().AddFire();
         }
     }
 }
