@@ -183,6 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d219e9a8659d0945af601ddfab7c57a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  cutMesh: {fileID: 7144962459603815757, guid: 8917fecf462e3d246b28ffd34e6ab41a, type: 3}
 --- !u!1 &8424476653259526905
 GameObject:
   m_ObjectHideFlags: 0
