@@ -235,6 +235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   animator: {fileID: 0}
   visitorType: 1
+  atTable: 0
   toughts: {fileID: 6324747329591913111}
   request: 0000000004000000
   dislikes: 01000000
@@ -364,6 +365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84be833677b35f441b5d760cdfa3b9c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  visionCone: 0.6
 --- !u!1001 &2541924332548933648
 PrefabInstance:
   m_ObjectHideFlags: 0
