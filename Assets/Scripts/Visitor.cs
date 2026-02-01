@@ -8,6 +8,16 @@ using UnityEngine.AI;
 public class Visitor : MonoBehaviour
 {
 
+    Transform distraction;
+    Transform lookat;
+    float time = 0;
+    public void Distract(Transform goal, Transform lookat, float time)
+    {
+        this.lookat = lookat;
+        this.time = time;
+        distraction = goal;
+    }
+
     public Animator animator;
     [SerializeField] public VisitorType visitorType;
 
@@ -53,6 +63,8 @@ public class Visitor : MonoBehaviour
     public bool atTable;
     private IEnumerator GoToTable()
     {
+        if (atTable)
+            yield break;
 
         agent.destination = table.transform.position;
         yield return new WaitForSeconds(1);
@@ -97,8 +109,51 @@ public class Visitor : MonoBehaviour
         animator.SetBool("Sitting", true);
         toughts.text = "Waiting...";
 
-        //  yield return WaitForPlayerNear();
+        while (true)
+        {
+            if (!poison)
+            {
+                if (distraction != null)
+                {
+                    if (time < 0)
+                    {
+                        distraction = null;
+                        yield return GoToTable();
+                        animator.SetBool("Sitting", true);
+                    }
+                    else
+                    {
+                        Debug.Log(time);
+                        atTable = false;
+                        animator.SetBool("Sitting", false);
+                        if (Vector3.Distance(transform.position, distraction.transform.position) > 1)
+                            agent.destination = distraction.transform.position;
+                        else
+                            agent.destination = transform.position;
+                        yield return new WaitUntil(() =>
+                        {
+                            return agent.velocity.sqrMagnitude < 0.01f;
+                        });
 
+                        Vector3 look = lookat.position;
+                        look.y = agent.transform.position.y;
+                        agent.transform.LookAt(look);
+                        time -= .1f;
+                    }
+                }
+
+                else
+                {
+                    GoToTable();
+                }
+            }
+
+            yield return new WaitForSeconds(.1f);
+        }
+    }
+
+    public void ShowRequest()
+    {
         toughts.text = "I want:\n";
         foreach (Tags tag in request)
         {
@@ -110,8 +165,6 @@ public class Visitor : MonoBehaviour
         {
             toughts.text += $"- {tag}\n";
         }
-
-        //   yield return LeaveAfterAWhile();
     }
 
     private IEnumerator LeaveAfterAWhile()
@@ -168,8 +221,11 @@ public class Visitor : MonoBehaviour
         Destroy(this);
     }
 
+
+    bool poison;
     private IEnumerator AtePoison()
     {
+        poison = true;
         atTable = false;
         yield return new WaitForSeconds(3);
         toughts.text = "I am not feeling well.";
