@@ -2,25 +2,36 @@ using UnityEngine;
 
 public class Scarable : MonoBehaviour
 {
-
+    [SerializeField] private float visionSize = 10;
     [SerializeField] private float visionCone = 0.6f;
 
     public void OnDrawGizmos()
     {
         Vector3 lookDirection = transform.forward.normalized;
+        Vector2 lookDirection2 = new Vector2(lookDirection.x, lookDirection.z);
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(transform.position, transform.position + lookDirection);
 
         for (float t = 0; t < 2; t += 0.01f)
         {
             float x = Mathf.Cos(t * Mathf.PI);
             float y = Mathf.Sin(t * Mathf.PI);
 
-            float vision = Vector2.Dot(new Vector2(x, y), -lookDirection);
-            if (vision < visionCone)
+            if (InVision(new Vector3(x, 0, y)))
             {
-                Debug.DrawLine(transform.position, transform.position + new Vector3(x, 0, y), Color.coral);
+                Gizmos.color = Color.green;
+                Gizmos.DrawLine(transform.position, transform.position + (new Vector3(x, 0, y) * visionSize));
             }
-
         }
+    }
+
+    public bool InVision(Vector3 shotDirection)
+    {
+        Vector2 ld2d = new Vector2(transform.forward.x, transform.forward.z);
+
+        float vision = Vector2.Dot(new Vector2(shotDirection.x, shotDirection.z), -ld2d);
+        return vision < visionCone;
     }
 
     float susMeter = 0;
@@ -39,22 +50,13 @@ public class Scarable : MonoBehaviour
             Vector3 point = scare.transform.position;
 
             Vector3 rayDirection = (point - eye).normalized;
-            Vector3 lookDirection = transform.forward.normalized;
-
-            Debug.DrawLine(transform.position, transform.position + lookDirection, Color.yellow);
             Debug.DrawLine(transform.position, transform.position + rayDirection, Color.blue);
 
-            float vision = Vector2.Dot(rayDirection, lookDirection);
-
-
-            // Not in the vision 
-            if (vision < visionCone)
-            {
-                continue;
-            }
+            if (!InVision(rayDirection))
+                return;
 
             RaycastHit hit;
-            bool anything = Physics.Raycast(eye, rayDirection, out hit, 10);
+            bool anything = Physics.Raycast(eye, rayDirection, out hit, visionSize);
             if (!anything)
             {
                 continue;
