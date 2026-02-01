@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5398181413186693337}
   - component: {fileID: 6218508563836633727}
   - component: {fileID: 7480335549668203660}
+  - component: {fileID: 8624224381473785652}
   m_Layer: 0
   m_Name: Potato
   m_TagString: Item
@@ -170,6 +171,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   cookedMaterial: {fileID: 2100000, guid: 8560def98f63ba146837f572d31f656f, type: 2}
   burnedMaterial: {fileID: 2100000, guid: c4c32ffb0fa41ca46818fe14e1acb973, type: 2}
+--- !u!114 &8624224381473785652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7330987688947593958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d219e9a8659d0945af601ddfab7c57a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &8424476653259526905
 GameObject:
   m_ObjectHideFlags: 0

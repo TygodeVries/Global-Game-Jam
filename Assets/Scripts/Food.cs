@@ -7,7 +7,10 @@ public class Food : MonoBehaviour
 
     public void AddTag(Tags tag)
     {
-        BroadcastMessage("TagApplied", tag);
-        tags.Add(tag);
+        if (!tags.Contains(tag))
+        {
+            BroadcastMessage("TagApplied", tag);
+            tags.Add(tag);
+        }
     }
 }
