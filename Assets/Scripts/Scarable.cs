@@ -28,6 +28,17 @@ public class Scarable : MonoBehaviour
         }
     }
 
+
+    [SerializeField] private MeshRenderer coneRenderer;
+    [SerializeField] private Color normalColor;
+    [SerializeField] private Color susColor;
+
+    public void Destroy()
+    {
+        Destroy(coneRenderer);
+        Destroy(this);
+    }
+
     public void UpdateMesh()
     {
         Mesh mesh = new Mesh();
@@ -87,6 +98,8 @@ public class Scarable : MonoBehaviour
     public void Update()
     {
         UpdateMesh();
+
+        coneRenderer.material.color = Color.Lerp(normalColor, susColor, susMeter);
 
         Scarer[] scarers = FindObjectsByType<Scarer>(FindObjectsSortMode.None);
 
@@ -153,6 +166,7 @@ public class Scarable : MonoBehaviour
             visitor.gameObject.GetComponentInChildren<Animator>().SetBool("Panic", true);
             visitor.toughts.text = "AAAAHHAHHAHAHAHAHHAHH!!!!!!";
             FindAnyObjectByType<HealthInspector>().PanicStarts(visitor);
+            Destroy(coneRenderer);
             visitor.LeaveNow();
         }
     }
