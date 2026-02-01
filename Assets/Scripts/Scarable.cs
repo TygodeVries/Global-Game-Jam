@@ -151,7 +151,12 @@ public class Scarable : MonoBehaviour
 
         if (susMeter > 0)
         {
-            wasSus = true;
+            if (!wasSus)
+            {
+                what.Play();
+                Debug.LogWarning("What??");
+                wasSus = true;
+            }
             GetComponent<Visitor>().toughts.text = "What is that...";
         }
         else if (wasSus)
@@ -164,12 +169,14 @@ public class Scarable : MonoBehaviour
         {
             Visitor visitor = GetComponent<Visitor>();
             visitor.gameObject.GetComponentInChildren<Animator>().SetBool("Panic", true);
-            visitor.toughts.text = "AAAAHHAHHAHAHAHAHHAHH!!!!!!";
+
             FindAnyObjectByType<HealthInspector>().PanicStarts(visitor);
             Destroy(coneRenderer);
             visitor.LeaveNow();
         }
     }
 
-    bool wasSus;
+    bool wasSus = false;
+
+    [SerializeField] private AudioSource what;
 }
