@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Knive : MonoBehaviour
 {
+    [SerializeField] AudioSource death;
+
     public void Update()
     {
         Visitor[] visitors = FindObjectsByType<Visitor>(FindObjectsSortMode.None);
@@ -20,6 +22,7 @@ public class Knive : MonoBehaviour
             if (Vector3.Distance(v, m) < 1)
             {
                 GetComponentInChildren<ParticleSystem>().Play();
+                death.Play();
                 visitor.Die();
             }
         }
