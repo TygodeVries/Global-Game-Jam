@@ -13648,6 +13648,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Burnable
   cookedMaterial: {fileID: 2100000, guid: 8560def98f63ba146837f572d31f656f, type: 2}
   burnedMaterial: {fileID: 2100000, guid: c4c32ffb0fa41ca46818fe14e1acb973, type: 2}
+  materialCount: 0
 --- !u!114 &687342955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16721,7 +16722,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1081376046}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 5d9afb999c24d7148bb375358fc8519f, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -18073,7 +18074,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1422210191}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 5d9afb999c24d7148bb375358fc8519f, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -27413,7 +27414,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2100144692}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 5d9afb999c24d7148bb375358fc8519f, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
