@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Burnable : MonoBehaviour
@@ -9,12 +10,18 @@ public class Burnable : MonoBehaviour
     {
         if (tag == Tags.Cooked)
         {
-            GetComponent<MeshRenderer>().materials[materialCount] = cookedMaterial;
+            List<Material> materials = new List<Material>();
+            GetComponent<MeshRenderer>().GetMaterials(materials);
+            materials[materialCount] = cookedMaterial;
+            GetComponent<MeshRenderer>().SetMaterials(materials);
         }
 
         if (tag == Tags.Burned)
         {
-            GetComponent<MeshRenderer>().materials[materialCount] = burnedMaterial;
+            List<Material> materials = new List<Material>();
+            GetComponent<MeshRenderer>().GetMaterials(materials);
+            materials[materialCount] = burnedMaterial;
+            GetComponent<MeshRenderer>().SetMaterials(materials);
         }
     }
 }
