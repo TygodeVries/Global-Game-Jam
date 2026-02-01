@@ -1,12 +1,14 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Scarable : MonoBehaviour
 {
     [SerializeField] private float visionSize = 10;
     [SerializeField] private float visionCone = 0.6f;
-
+    [SerializeField] private MeshFilter coneFilter;
     public void OnDrawGizmos()
     {
+        return;
         Vector3 lookDirection = transform.forward.normalized;
         Vector2 lookDirection2 = new Vector2(lookDirection.x, lookDirection.z);
 
@@ -26,6 +28,53 @@ public class Scarable : MonoBehaviour
         }
     }
 
+    public void UpdateMesh()
+    {
+        Mesh mesh = new Mesh();
+
+        List<Vector3> vertices = new List<Vector3>();
+        vertices.Add(transform.InverseTransformPoint(transform.position));
+
+        for (float t = 0; t < 2; t += 0.02f)
+        {
+            float x = Mathf.Cos(t * Mathf.PI);
+            float y = Mathf.Sin(t * Mathf.PI);
+
+            if (InVision(new Vector3(x, 0, y)))
+            {
+                RaycastHit hit;
+
+                if (Physics.Raycast(transform.position, new Vector3(x, 0, y), out hit, visionSize))
+                {
+                    vertices.Add(transform.InverseTransformPoint(hit.point));
+                }
+                else
+                {
+                    vertices.Add(transform.InverseTransformPoint(transform.position + (new Vector3(x, 0, y) * visionSize)));
+                }
+            }
+        }
+
+        mesh.vertices = vertices.ToArray();
+
+        int trisCount = vertices.Count - 2;
+        int[] triangles = new int[trisCount * 3];
+
+        for (int i = 0; i < trisCount; i++)
+        {
+            triangles[(i * 3) + 0] = 0;
+            triangles[(i * 3) + 2] = i + 1;
+            triangles[(i * 3) + 1] = i + 2;
+        }
+
+        mesh.triangles = triangles;
+
+        mesh.RecalculateBounds();
+        mesh.RecalculateNormals();
+
+        coneFilter.mesh = mesh;
+    }
+
     public bool InVision(Vector3 shotDirection)
     {
         Vector2 ld2d = new Vector2(transform.forward.x, transform.forward.z);
@@ -37,7 +86,7 @@ public class Scarable : MonoBehaviour
     float susMeter = 0;
     public void Update()
     {
-
+        UpdateMesh();
 
         Scarer[] scarers = FindObjectsByType<Scarer>(FindObjectsSortMode.None);
 
