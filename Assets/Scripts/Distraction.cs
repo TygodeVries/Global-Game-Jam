@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Distraction : MonoBehaviour
 {
-    [SerializeField] private float Range;
+    [SerializeField] public float Range;
     [SerializeField] private Transform Goal;
 
     public void OnDrawGizmos()
