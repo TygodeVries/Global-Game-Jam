@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 7804105152408359956}
   - component: {fileID: 6392320510112802293}
   - component: {fileID: 8126399536784687891}
+  - component: {fileID: 2771275573256249707}
   m_Layer: 0
   m_Name: Flesh Cube
   m_TagString: Item
@@ -33,7 +34,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.6977785, z: -0, w: -0.71631354}
   m_LocalPosition: {x: -3.822, y: 2.444, z: 5.284}
-  m_LocalScale: {x: 0.44315, y: 0.44315, z: 0.44315}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7661464942474385979}
@@ -107,7 +108,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6396819666718220904}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: d2127bc5ddd1ce84b84a9ce3d2ad9c4b, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -119,8 +120,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.13, y: 0.550189, z: 0.24815053}
+  m_Center: {x: 2.6734448e-12, y: 0.2118597, z: 0.00425981}
 --- !u!54 &698832539023400444
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -188,6 +189,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56e8052986a7de84f88f2aed33c77cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Scarer
+--- !u!114 &2771275573256249707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6396819666718220904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d219e9a8659d0945af601ddfab7c57a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Cutable
+  cutMesh: {fileID: 2508467862564452831, guid: 576ea383884eed74a84a1e1687e3302b, type: 3}
 --- !u!1 &6684768557033967692
 GameObject:
   m_ObjectHideFlags: 0

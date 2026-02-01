@@ -14,7 +14,7 @@ public class Grinder : MonoBehaviour
             GetComponent<AudioSource>().Play();
             Destroy(collision.gameObject);
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 2; i++)
             {
                 GameObject spawn = spawns[Random.Range(0, spawns.Count)];
                 GameObject.Instantiate(spawn, output.position, Quaternion.identity);
