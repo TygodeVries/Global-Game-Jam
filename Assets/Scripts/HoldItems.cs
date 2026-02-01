@@ -43,7 +43,7 @@ public class HoldItems : MonoBehaviour
         throwPower += Time.deltaTime;
     }
 
-    float reach = 1;
+    float reach = 1.5f;
 
     [HideInInspector] public GameObject item;
     [SerializeField] private GameObject holdPoint;

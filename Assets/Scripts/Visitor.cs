@@ -162,6 +162,9 @@ public class Visitor : MonoBehaviour
         gameObject.tag = "Item";
         gameObject.AddComponent<Scarer>();
         animator.ResetControllerState(true);
+        Scarable scare = GetComponent<Scarable>();
+        if (scare != null)
+            scare.Destroy();
         Destroy(this);
     }
 

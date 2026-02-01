@@ -28,6 +28,17 @@ public class Scarable : MonoBehaviour
         }
     }
 
+
+    [SerializeField] private MeshRenderer coneRenderer;
+    [SerializeField] private Color normalColor;
+    [SerializeField] private Color susColor;
+
+    public void Destroy()
+    {
+        Destroy(coneRenderer);
+        Destroy(this);
+    }
+
     public void UpdateMesh()
     {
         Mesh mesh = new Mesh();
@@ -88,6 +99,8 @@ public class Scarable : MonoBehaviour
     {
         UpdateMesh();
 
+        coneRenderer.material.color = Color.Lerp(normalColor, susColor, susMeter);
+
         Scarer[] scarers = FindObjectsByType<Scarer>(FindObjectsSortMode.None);
 
         Vector3 eye = transform.position + new Vector3(0, 0.5f, 0);
@@ -99,10 +112,15 @@ public class Scarable : MonoBehaviour
             Vector3 point = scare.transform.position;
 
             Vector3 rayDirection = (point - eye).normalized;
-            Debug.DrawLine(transform.position, transform.position + rayDirection, Color.blue);
 
             if (!InVision(rayDirection))
-                return;
+            {
+                Debug.DrawLine(transform.position, transform.position + rayDirection, Color.white);
+                continue;
+            }
+
+            Debug.DrawLine(transform.position, transform.position + rayDirection, Color.green);
+
 
             RaycastHit hit;
             bool anything = Physics.Raycast(eye, rayDirection, out hit, visionSize);
@@ -148,6 +166,7 @@ public class Scarable : MonoBehaviour
             visitor.gameObject.GetComponentInChildren<Animator>().SetBool("Panic", true);
             visitor.toughts.text = "AAAAHHAHHAHAHAHAHHAHH!!!!!!";
             FindAnyObjectByType<HealthInspector>().PanicStarts(visitor);
+            Destroy(coneRenderer);
             visitor.LeaveNow();
         }
     }
