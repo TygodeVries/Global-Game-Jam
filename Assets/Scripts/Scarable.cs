@@ -99,10 +99,15 @@ public class Scarable : MonoBehaviour
             Vector3 point = scare.transform.position;
 
             Vector3 rayDirection = (point - eye).normalized;
-            Debug.DrawLine(transform.position, transform.position + rayDirection, Color.blue);
 
             if (!InVision(rayDirection))
-                return;
+            {
+                Debug.DrawLine(transform.position, transform.position + rayDirection, Color.white);
+                continue;
+            }
+
+            Debug.DrawLine(transform.position, transform.position + rayDirection, Color.green);
+
 
             RaycastHit hit;
             bool anything = Physics.Raycast(eye, rayDirection, out hit, visionSize);

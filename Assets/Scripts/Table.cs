@@ -7,7 +7,7 @@ public class Table : MonoBehaviour
 
     public void Update()
     {
-        if (visitor.atTable)
+        if (visitor != null && visitor.atTable)
             visitor.transform.forward = transform.up;
     }
 
