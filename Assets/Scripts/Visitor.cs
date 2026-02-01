@@ -1,4 +1,3 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -97,8 +96,25 @@ public class Visitor : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
     }
+
+    [SerializeField] private MeshRenderer icon;
+
+    [SerializeField] List<Texture> Icons;
+
+    public void SetIcon(int icon)
+    {
+        this.icon.material.mainTexture = Icons[icon];
+    }
+
     private IEnumerator Start()
     {
+
+        if (Random.Range(0, 100) < 25)
+        {
+            request.Add(Tags.Cut);
+        }
+
+        icon.material = new Material(icon.material);
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
         startPosition = transform.position;
@@ -107,8 +123,7 @@ public class Visitor : MonoBehaviour
         yield return GoToTable();
 
         animator.SetBool("Sitting", true);
-        toughts.text = "Waiting...";
-
+        ShowRequest();
         while (true)
         {
             if (!poison)
@@ -120,12 +135,14 @@ public class Visitor : MonoBehaviour
                         distraction = null;
                         yield return GoToTable();
                         animator.SetBool("Sitting", true);
+                        ShowRequest();
                     }
                     else
                     {
                         Debug.Log(time);
                         atTable = false;
                         animator.SetBool("Sitting", false);
+                        SetIcon(9);
                         if (Vector3.Distance(transform.position, distraction.transform.position) > 1)
                             agent.destination = distraction.transform.position;
                         else
@@ -154,17 +171,26 @@ public class Visitor : MonoBehaviour
 
     public void ShowRequest()
     {
-        toughts.text = "I want:\n";
-        foreach (Tags tag in request)
+        if (request.Contains(Tags.Leg) && request.Contains(Tags.Cooked) && !request.Contains(Tags.Cut))
         {
-            toughts.text += $"- {tag}\n";
+            icon.material.mainTexture = Icons[0];
         }
 
-        toughts.text += "I don't want:\n";
-        foreach (Tags tag in dislikes)
+        if (request.Contains(Tags.Leg) && request.Contains(Tags.Cooked) && request.Contains(Tags.Cut))
         {
-            toughts.text += $"- {tag}\n";
+            icon.material.mainTexture = Icons[1];
         }
+
+        if (request.Contains(Tags.Potato) && request.Contains(Tags.Cooked) && !request.Contains(Tags.Cut))
+        {
+            icon.material.mainTexture = Icons[2];
+        }
+
+        if (request.Contains(Tags.Potato) && request.Contains(Tags.Cooked) && request.Contains(Tags.Cut))
+        {
+            icon.material.mainTexture = Icons[3];
+        }
+
     }
 
     private IEnumerator LeaveAfterAWhile()
@@ -208,6 +234,7 @@ public class Visitor : MonoBehaviour
     public void Die()
     {
         toughts.text = "";
+        icon.material.mainTexture = Icons[4];
         StopAllCoroutines();
         Destroy(gameObject.GetComponent<NavMeshAgent>());
         Destroy(animator);
@@ -225,6 +252,7 @@ public class Visitor : MonoBehaviour
     bool poison;
     private IEnumerator AtePoison()
     {
+        icon.material.mainTexture = Icons[5];
         poison = true;
         atTable = false;
         yield return new WaitForSeconds(3);
@@ -245,7 +273,10 @@ public class Visitor : MonoBehaviour
         });
 
         animator.SetBool("Barfing", true);
-        yield return new WaitForSeconds(200);
+        if (visitorType == VisitorType.Human)
+            yield return new WaitForSeconds(200);
+        else
+            yield return new WaitForSeconds(10);
         animator.SetBool("Barfing", false);
         LeaveNow();
 

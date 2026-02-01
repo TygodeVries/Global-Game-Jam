@@ -18,6 +18,8 @@ public class HealthInspector : MonoBehaviour
     {
         if (isComing)
             yield break;
+
+        starter.SetIcon(8);
         isComing = true;
         GetComponent<Animator>().SetTrigger("Start");
         FindAnyObjectByType<Camera>().GetComponent<CameraMotion>().SetTarget(starter.transform);
@@ -38,7 +40,10 @@ public class HealthInspector : MonoBehaviour
             visitor.LeaveNow();
 
             if (visitor.visitorType == VisitorType.Human)
+            {
                 visitor.animator.SetBool("Panic", true);
+                visitor.SetIcon(8);
+            }
         }
 
         GameObject gm = null;

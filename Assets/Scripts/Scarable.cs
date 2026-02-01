@@ -29,6 +29,7 @@ public class Scarable : MonoBehaviour
     }
 
 
+    private float voice = 1;
     [SerializeField] private MeshRenderer coneRenderer;
     [SerializeField] private Color normalColor;
     [SerializeField] private Color susColor;
@@ -37,6 +38,11 @@ public class Scarable : MonoBehaviour
     {
         Destroy(coneRenderer);
         Destroy(this);
+    }
+
+    private void Start()
+    {
+        voice = Random.Range(-0.8f, 1.2f);
     }
 
     public void UpdateMesh()
@@ -153,8 +159,8 @@ public class Scarable : MonoBehaviour
         {
             if (!wasSus)
             {
+                what.pitch = voice;
                 what.Play();
-                Debug.LogWarning("What??");
                 wasSus = true;
             }
             GetComponent<Visitor>().toughts.text = "What is that...";

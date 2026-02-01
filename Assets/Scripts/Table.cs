@@ -13,10 +13,16 @@ public class Table : MonoBehaviour
 
     public void FoodServed(GameObject gm)
     {
+        if (gm == null)
+        {
+            visitor.ShowRequest();
+            return;
+        }
+
         Food food = gm.GetComponent<Food>();
         if (food == null)
         {
-            visitor.toughts.text = "I can't eat this!";
+            visitor.SetIcon(6);
             return;
         }
 
@@ -24,7 +30,7 @@ public class Table : MonoBehaviour
         {
             if (visitor.dislikes.Contains(tag))
             {
-                visitor.toughts.text = $"This is terrible, I did not ask for this!\nIt contains {tag}!";
+                visitor.SetIcon(6);
                 return;
             }
         }
@@ -33,12 +39,14 @@ public class Table : MonoBehaviour
         {
             if (!food.tags.Contains(tag))
             {
-                visitor.toughts.text = $"I did not ask for this!\nIt does not contain {tag}";
+                visitor.SetIcon(6);
                 return;
             }
         }
 
         visitor.toughts.text = "Ohhh I love this!";
+
+        visitor.SetIcon(7);
 
         Destroy(food.gameObject);
         if (food.tags.Contains(Tags.Poison))
