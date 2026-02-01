@@ -11,6 +11,7 @@ public class Grinder : MonoBehaviour
         if (collision.gameObject.GetComponent<Grindable>() != null)
         {
             blood.Play();
+            GetComponent<AudioSource>().Play();
             Destroy(collision.gameObject);
 
             for (int i = 0; i < 5; i++)
