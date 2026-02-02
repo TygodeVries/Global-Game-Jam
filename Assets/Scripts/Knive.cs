@@ -6,6 +6,9 @@ public class Knive : MonoBehaviour
 
     public void Update()
     {
+        if (transform.parent == null && GetComponent<Rigidbody>().linearVelocity.sqrMagnitude < 0.1f) // Not being hold
+            return;
+
         Visitor[] visitors = FindObjectsByType<Visitor>(FindObjectsSortMode.None);
 
         foreach (Visitor visitor in visitors)

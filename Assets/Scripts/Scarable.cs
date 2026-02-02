@@ -42,7 +42,7 @@ public class Scarable : MonoBehaviour
 
     private void Start()
     {
-        voice = Random.Range(-0.8f, 1.2f);
+        voice = Random.Range(0.8f, 1.2f);
     }
 
     public void UpdateMesh()
