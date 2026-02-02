@@ -58,8 +58,11 @@ public class HealthInspector : MonoBehaviour
 
         yield return new WaitForSeconds(2);
         FindAnyObjectByType<Camera>().GetComponent<CameraMotion>().SetTarget(null);
+        GameObject.Find("Lights").GetComponent<Animator>().SetTrigger("Panic");
+        yield return new WaitForSeconds(19.5f);
+        GameObject.Find("Lights").GetComponent<Animator>().SetTrigger("Save");
 
-        yield return new WaitForSeconds(20);
+        yield return new WaitForSeconds(0.2f);
         scoreCanvas.SetActive(true);
 
         foreach (PlayerMovement playerMovement in FindObjectsByType<PlayerMovement>(FindObjectsSortMode.None))
