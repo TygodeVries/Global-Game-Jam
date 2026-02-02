@@ -247,7 +247,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5d6634752ea9e2441a91f80397ddc17a, type: 2}
+  - {fileID: 2100000, guid: 5966dc4b72d37f3429c66ef7ddaf79c6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -668,7 +668,7 @@ MonoBehaviour:
   visionCone: -0.85
   coneFilter: {fileID: 7676440338844151511}
   coneRenderer: {fileID: 5709942853493991089}
-  normalColor: {r: 0, g: 0, b: 0, a: 0.6862745}
+  normalColor: {r: 1, g: 1, b: 1, a: 0.6862745}
   susColor: {r: 0.8301887, g: 0.14489143, b: 0.14489143, a: 0.7372549}
   what: {fileID: 5994458758111950910}
 --- !u!1 &5957085979233830358
